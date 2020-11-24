@@ -1,3 +1,6 @@
+// Author: Olle Bergkvist
+// Student acronym: olbe19
+
 /*
  * MA1487 Matematisk modellering
  * Kursmoment 01
@@ -251,8 +254,37 @@ function exercise17(n, k) {
  * @param {Number} m total number of people in from group 2
  * @return {Number} Probability described above
  */
-function exercise18() {
-	return null;
+function exercise18(n, m) {
+	Math.factorial = function (n) {
+		var i = n;
+		while (--i) n *= i;
+		return n;
+	};
+
+	Math.combinations = function (n, r, repeats) {
+		if (n < r) return 0;
+		if (n === r) return 1;
+		return Math.factorial(n) / (Math.factorial(r) * Math.factorial(n - r));
+	};
+
+	const totalNrOfPeopleGroup1 = n;
+	const totalNrOfPeopleGroup2 = m;
+	const totalNrOfPeople = totalNrOfPeopleGroup1 + totalNrOfPeopleGroup2;
+
+	const combinations3OutOfGroup1 = Math.combinations(totalNrOfPeopleGroup1, 3);
+	const combinations2OutOfGroup2 = Math.combinations(totalNrOfPeopleGroup2, 2);
+	const combinations5OutOfTotalNrOfPeople = Math.combinations(
+		totalNrOfPeople,
+		5
+	);
+
+	const favorableOutcome =
+		(combinations3OutOfGroup1 * combinations2OutOfGroup2) /
+		combinations5OutOfTotalNrOfPeople;
+
+	const answer = favorableOutcome.toFixed(3);
+
+	return answer;
 }
 
 /**
@@ -268,7 +300,12 @@ function exercise18() {
  * @returns {Number} the probability Pr(A ∪ B) with 3 decimal precision
  */
 function exercise19() {
-	return 0;
+	const probabilityA = 0.16;
+	const probabilityAComplimentIntersectionB = 0.12;
+	const probabilityAUnionB = probabilityA + probabilityAComplimentIntersectionB;
+	const answer = probabilityAUnionB.toFixed(3);
+
+	return answer;
 }
 
 /**
@@ -284,7 +321,13 @@ function exercise19() {
  * @returns {Number} the probability Pr(B) with 3 decimal precision
  */
 function exercise20() {
-	return 0;
+	const probabilityAIntersectionB = 0.003;
+	const probabilityComplimentAIntersectionB = 0.12;
+	const probabilityB =
+		probabilityAIntersectionB + probabilityComplimentAIntersectionB;
+	const answer = probabilityB.toFixed(3);
+
+	return answer;
 }
 
 /**
@@ -302,9 +345,10 @@ function exercise20() {
 function exercise21() {
 	const probabilityA = 0.16;
 	const probabilityAIntersectionB = 0.003;
-	const probabilityAComplimentIntersectionB = 0.12;
-	const probabilityAIntersectionComplimentB;
+	const probabilityAIntersectionComplimentB =
+		probabilityA - probabilityAIntersectionB;
 	const answer = probabilityAIntersectionComplimentB.toFixed(3);
+
 	return answer;
 }
 
