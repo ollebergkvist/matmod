@@ -33,7 +33,7 @@
  * @returns {Set} the set A ∩ B
  */
 function exercise01() {
-	return new Set([]);
+	return new Set([2, 4, 8]);
 }
 
 /**
@@ -47,7 +47,7 @@ function exercise01() {
  * @returns {Set} the set A ∪ B
  */
 function exercise02() {
-	return new Set([]);
+	return new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 }
 
 /**
@@ -60,7 +60,7 @@ function exercise02() {
  * @returns {Set} the set A ∩ CB
  */
 function exercise03() {
-	return new Set([]);
+	return new Set([6]);
 }
 
 /**
@@ -73,7 +73,7 @@ function exercise03() {
  * @returns {Set} the set CA ∩ B
  */
 function exercise04() {
-	return new Set([]);
+	return new Set([1, 3, 9]);
 }
 
 /**
@@ -86,7 +86,7 @@ function exercise04() {
  * @returns {Set} the set CA ∩ CB
  */
 function exercise05() {
-	return new Set([]);
+	return new Set([5, 7]);
 }
 
 /**
@@ -99,7 +99,7 @@ function exercise05() {
  * @returns {Set} the set C(A ∪ B)
  */
 function exercise06() {
-	return new Set([]);
+	return new Set([5, 7]);
 }
 
 /**
@@ -112,7 +112,7 @@ function exercise06() {
  * @returns {Set} the set (A ∩ CB)∪(CA ∩ B)
  */
 function exercise07() {
-	return new Set([]);
+	return new Set([1, 3, 6, 9]);
 }
 
 /**
@@ -122,7 +122,14 @@ function exercise07() {
  * @returns {Boolean} true if A is a proper subset of B, otherwise false
  */
 function exercise08(A, B) {
-	return null;
+	if (
+		[...A].every((elem) => [...B].includes(elem)) &&
+		[...A].length != [...B].length
+	) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -136,7 +143,10 @@ function exercise08(A, B) {
  *
  */
 function exercise09(A, B) {
-	return null;
+	let union = new Set([...A, ...B]);
+	const answer = union.size;
+
+	return answer;
 }
 
 /**
@@ -148,8 +158,14 @@ function exercise09(A, B) {
  * @param {Set} B
  * @return {Boolean} true if A and B are disjoint, otherwise false
  */
-function exercise10() {
-	return null;
+function exercise10(A, B) {
+	let intersection = new Set([...A].filter((x) => B.has(x)));
+
+	if ([...intersection].length === 0) {
+		return true;
+	}
+
+	return false;
 }
 
 /**
@@ -162,7 +178,14 @@ function exercise10() {
  * @returns {Number}    The probability a n-sided dice will show exactly p dots with 3 decimal precision
  */
 function exercise11(n, p) {
-	return null;
+	const favorableOutcomes = 1;
+	const totalOutcomes = n;
+
+	const calculation = favorableOutcomes / totalOutcomes;
+
+	const answer = calculation.toFixed(3);
+
+	return answer;
 }
 
 /**
@@ -176,7 +199,14 @@ function exercise11(n, p) {
  * with 3 decimal precision
  */
 function exercise12(n, p) {
-	return null;
+	const favorableOutcomes = p;
+	const nrOfSidesOfDice = n;
+
+	const calculation = favorableOutcomes / nrOfSidesOfDice;
+
+	const answer = calculation.toFixed(3);
+
+	return answer;
 }
 
 /**
@@ -190,7 +220,14 @@ function exercise12(n, p) {
  * with 3 decimal precision
  */
 function exercise13(n, p) {
-	return null;
+	const favorableOutcomes = n - p + 1;
+	const nrOfSidesOfDice = n;
+
+	const calculation = favorableOutcomes / nrOfSidesOfDice;
+
+	const answer = calculation.toFixed(3);
+
+	return answer;
 }
 
 /**
@@ -202,7 +239,10 @@ function exercise13(n, p) {
  * @returns {Number}    The relative frequency a dice will show a 5 or 6 with 3 decimal precision
  */
 function exercise14() {
-	return null;
+	const probability5Or6 = 2 / 6;
+	const answer = Math.round(probability5Or6 * 1000) / 1000;
+
+	return answer;
 }
 
 /**
@@ -214,7 +254,16 @@ function exercise14() {
  */
 
 function exercise15(n) {
-	return null;
+	function factorial(number) {
+		var rval = 1;
+		for (var i = 2; i <= number; i++) rval = rval * i;
+		return rval;
+	}
+
+	const number = n;
+	const answer = factorial(number);
+
+	return answer;
 }
 
 /**
@@ -227,7 +276,25 @@ function exercise15(n) {
  * @return {Number}
  */
 function exercise16(n, k) {
-	return null;
+	Math.factorial = function (n) {
+		var i = n;
+		while (--i) n *= i;
+		return n;
+	};
+
+	Math.combinations = function (n, r) {
+		const difference = n - r;
+		if (n < r) return 0;
+		if (n === r) return 1;
+
+		return Math.factorial(n) / Math.factorial(difference);
+	};
+
+	chooseK = k;
+	fromN = n;
+	permutationsChooseKFromN = Math.combinations(fromN, chooseK);
+
+	return permutationsChooseKFromN;
 }
 
 /**
@@ -240,7 +307,24 @@ function exercise16(n, k) {
  * @return {Number}
  */
 function exercise17(n, k) {
-	return null;
+	Math.factorial = function (n) {
+		var i = n;
+		while (--i) n *= i;
+		return n;
+	};
+
+	Math.combinations = function (n, r, repeats) {
+		if (n < r) return 0;
+		if (n === r) return 1;
+
+		return Math.factorial(n) / (Math.factorial(r) * Math.factorial(n - r));
+	};
+
+	chooseK = k;
+	fromN = n;
+	combinationsChooseKFromN = Math.combinations(fromN, chooseK);
+
+	return combinationsChooseKFromN;
 }
 
 /**
