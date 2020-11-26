@@ -33,7 +33,12 @@
  * @returns {Set} the set A ∩ B
  */
 function exercise01() {
-	return new Set([2, 4, 8]);
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+	const setA = new Set([2, 4, 6, 8]);
+	const setB = new Set([1, 2, 3, 4, 8, 9]);
+	const setAnB = new Set([...setA].filter((x) => setB.has(x)));
+
+	return setAnB;
 }
 
 /**
@@ -47,20 +52,35 @@ function exercise01() {
  * @returns {Set} the set A ∪ B
  */
 function exercise02() {
-	return new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+	const setA = new Set([1, 3, 5, 7, 9]);
+	const setB = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+	const setAuB = new Set(setA);
+
+	for (let elem of setB) {
+		setAuB.add(elem);
+	}
+
+	return setAuB;
 }
 
 /**
  * Exercise03
  * Create the following sets
  * U = {1,2,3,4,5,6,7,8,9}
+ * * U = {5,6,7}
  * A = {2,4,6,8}
  * B = {1,2,3,4,8,9}
  *
  * @returns {Set} the set A ∩ CB
  */
 function exercise03() {
-	return new Set([6]);
+	const setA = new Set([2, 4, 6, 8]);
+	const setB = new Set([1, 2, 3, 4, 8, 9]);
+	const setAuB = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+	const CB = new Set([...setAuB].filter((x) => !setB.has(x)));
+	const setAnCB = new Set([...setA].filter((x) => CB.has(x)));
+
+	return setAnCB;
 }
 
 /**
@@ -73,7 +93,13 @@ function exercise03() {
  * @returns {Set} the set CA ∩ B
  */
 function exercise04() {
-	return new Set([1, 3, 9]);
+	const setA = new Set([2, 4, 6, 8]);
+	const setB = new Set([1, 2, 3, 4, 8, 9]);
+	const setAuB = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+	const CA = new Set([...setAuB].filter((x) => !setA.has(x)));
+	const setCAnB = new Set([...setB].filter((x) => CA.has(x)));
+
+	return setCAnB;
 }
 
 /**
@@ -86,7 +112,13 @@ function exercise04() {
  * @returns {Set} the set CA ∩ CB
  */
 function exercise05() {
-	return new Set([5, 7]);
+	const setA = new Set([2, 4, 6, 8]);
+	const setB = new Set([1, 2, 3, 4, 8, 9]);
+	const setAuB = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+	const removeBFromAuB = new Set([...setAuB].filter((x) => !setB.has(x)));
+	const setCAnCB = new Set([...removeBFromAuB].filter((x) => !setA.has(x)));
+
+	return setCAnCB;
 }
 
 /**
@@ -99,7 +131,13 @@ function exercise05() {
  * @returns {Set} the set C(A ∪ B)
  */
 function exercise06() {
-	return new Set([5, 7]);
+	const setA = new Set([2, 4, 6, 8]);
+	const setB = new Set([1, 2, 3, 4, 8, 9]);
+	const setAuB = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+	const removeBFromAuB = new Set([...setAuB].filter((x) => !setB.has(x)));
+	const setCAuB = new Set([...removeBFromAuB].filter((x) => !setA.has(x)));
+
+	return setCAuB;
 }
 
 /**
@@ -112,9 +150,18 @@ function exercise06() {
  * @returns {Set} the set (A ∩ CB)∪(CA ∩ B)
  */
 function exercise07() {
-	return new Set([1, 3, 6, 9]);
-}
+	// 1, 3, 6, 9
+	const setA = new Set([2, 4, 6, 8]);
+	const setB = new Set([1, 2, 3, 4, 8, 9]);
+	const setAuB = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+	const setCA = new Set([...setAuB].filter((x) => !setA.has(x)));
+	const setCB = new Set([...setAuB].filter((x) => !setB.has(x)));
+	const setAnCB = new Set([...setA].filter((x) => setCB.has(x)));
+	const setCAnB = new Set([...setCA].filter((x) => setB.has(x)));
+	const setAnCBuCAnB = new Set([...setAnCB, ...setCAnB]);
 
+	return setAnCBuCAnB;
+}
 /**
  * Exercise 08
  * Write a function to detemine if A is a proper subset of B
@@ -239,8 +286,23 @@ function exercise13(n, p) {
  * @returns {Number}    The relative frequency a dice will show a 5 or 6 with 3 decimal precision
  */
 function exercise14() {
-	const probability5Or6 = 2 / 6;
-	const answer = Math.round(probability5Or6 * 1000) / 1000;
+	function rollDice(min, max) {
+		return min + Math.floor(Math.random() * (max - min + 1));
+	}
+
+	let diceArrayWithFavorableRolls = [];
+	const nrOfRolls = 100000;
+
+	for (let index = 0; index < nrOfRolls; index++) {
+		let diceValue = rollDice(1, 6);
+
+		if (diceValue === 5 || diceValue === 6) {
+			diceArrayWithFavorableRolls.push(diceValue);
+		}
+	}
+
+	const calculation = diceArrayWithFavorableRolls.length / nrOfRolls;
+	const answer = Math.round(calculation * 1000) / 1000;
 
 	return answer;
 }
@@ -578,10 +640,12 @@ function exercise26() {
  *
  */
 function exercise27() {
-	const dice1 = 2 / 6; // Either a 5 or a 6
-	const dice2 = 2 / 6; // Either a 5 or a 6
-	const favorableOutcome = dice1 + dice2;
-	const answer = favorableOutcome.toFixed(3);
+	const favorableDiceRoll1 = 1; // (5,6)
+	const favorableDiceRoll2 = 1; // (6,5)
+	const favorableOutcome = favorableDiceRoll1 + favorableDiceRoll2;
+	const totalOutcomes = 3; // (5,6), (6,5), (6,6)
+	const probability = favorableOutcome / totalOutcomes;
+	const answer = probability.toFixed(3);
 
 	return answer;
 }
