@@ -1,0 +1,23 @@
+{
+  "name": "matmod",
+  "version": "1.0.0",
+  "description": "matmod",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ollebergkvist/matmod.git"
+  },
+  "author": "olle bergkvist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ollebergkvist/matmod/issues"
+  },
+  "homepage": "https://github.com/ollebergkvist/matmod#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "gaussian": "^1.1.0"
+  }
+}
